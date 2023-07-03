@@ -112,7 +112,7 @@ export default function ExpensePage({ params }) {
                         <tr className="table-row-end">
                             <td className="table-cell">{payedByUser}</td>
                             {positiveAmounts.map((transaction) => (
-                                <td className="table-cell positive">{transaction.amount.toFixed(2)} €</td>
+                                <td className="table-cell positive" key={transaction.transactionId}>{transaction.amount.toFixed(2)} €</td>
                             ))}
                         </tr>
                     </tbody>
