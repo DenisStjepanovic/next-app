@@ -1,23 +1,44 @@
 "use client";
 import { useState } from 'react';
-
+import supabase from '../../lib/supabaseClient';
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation"
 
 const SignInPage = () => {
-    const [email, setEmail] = useState('');
+    const router = useRouter();
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
 
     const handleSignIn = async (event) => {
         event.preventDefault();
 
-        // Hier kannst du die Anmelde-Logik implementieren, z. B. mit Supabase oder einer anderen Datenbanklösung
+        const { data: users, error: fetchError } = await supabase
+            .from('users')
+            .select('username, password')
+            .eq('username', username)
+            .eq('password', password);
 
-        // Beispiel: Überprüfe die Anmeldedaten
-        if (email === 'example@example.com' && password === 'password') {
-            // Authentifizierung erfolgreich
-
+        if (fetchError) {
+            console.error('Error:', fetchError);
+            setError('An error occurred during sign in');
         } else {
-            // Authentifizierung fehlgeschlagen
-            alert('Falsche Anmeldedaten'); // Zeige eine Fehlermeldung an
+            if (users.length > 0) {
+                const signInResponse = await signIn('credentials', {
+                    username,
+                    password,
+                    redirect: false,
+                });
+
+                if (signInResponse && !signInResponse.error) {
+                    router.push('/');
+                } else {
+                    console.log('Error:', signInResponse);
+                    setError('Your username or password is wrong');
+                }
+            } else {
+                setError('Invalid username or password');
+            }
         }
     };
 
@@ -26,12 +47,12 @@ const SignInPage = () => {
             <h1>Sign In</h1>
             <form onSubmit={handleSignIn}>
                 <div>
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="username">Username:</label>
                     <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
@@ -45,6 +66,7 @@ const SignInPage = () => {
                         required
                     />
                 </div>
+                {error && <p>{error}</p>}
                 <button type="submit">Sign In</button>
             </form>
         </div>
