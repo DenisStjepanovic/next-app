@@ -1,8 +1,8 @@
 "use client";
-import { useState } from 'react';
-import supabase from '../../lib/supabaseClient';
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation"
+import { useState } from 'react'
+import supabase from '../../lib/supabaseClient'
+import { signIn } from '../../node_modules/next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const SignInPage = () => {
     const router = useRouter();
