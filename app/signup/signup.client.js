@@ -4,13 +4,14 @@ import supabase from '../../lib/supabaseClient';
 
 const SignUpPage = () => {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSignUp = async (event) => {
         event.preventDefault();
 
         // Registriere den Benutzer in der Supabase-Benutzertabelle
-        const { data, error } = await supabase.from('users').insert([{ username, password }]);
+        const { data, error } = await supabase.from('users').insert([{ username, email, password }]);
 
         if (error) {
             // Registrierung fehlgeschlagen
@@ -32,6 +33,16 @@ const SignUpPage = () => {
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="email">E-Mail:</label>
+                    <input
+                        type="text"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
