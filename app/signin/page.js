@@ -1,6 +1,4 @@
-import SignInPage from './signin.client.js';
-
-
+import SignInPage from './signin2.client.js';
 
 const SignIn = () => {
     return (
