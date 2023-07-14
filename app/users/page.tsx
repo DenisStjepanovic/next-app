@@ -12,6 +12,7 @@ const GoogleData = async () => {
         }
     )
     const { data, error } = await supabase.from("users").select("name, email")
+    // const { data: transactionData, error: transactionError } = await supabase.from('users').insert([{ name: data, payedBy: paidByUserId, total: total, groupId: groupId, createdAt: new Date(), comment: comment }])
     return(
         <div>{JSON.stringify(data[0].name)}</div>
     )

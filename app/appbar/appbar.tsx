@@ -6,7 +6,7 @@ const AppBar = () => {
   return (
     <header>
       <SignInButton></SignInButton>
-      <Link href={"/users"}>User List:</Link>
+      {/* <Link href={"/users"}>User List:</Link> */}
     </header>
   );
 };
