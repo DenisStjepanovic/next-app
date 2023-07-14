@@ -16,6 +16,7 @@ const SignUpPage = () => {
         if (error) {
             // Registrierung fehlgeschlagen
             alert('Fehler bei der Registrierung'); // Zeige eine Fehlermeldung an
+            console.log(error)
         } else {
             // Registrierung erfolgreich
             console.log('Registrierung erfolgreich:', data);
